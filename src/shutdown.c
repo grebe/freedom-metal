@@ -20,3 +20,18 @@ void metal_shutdown(int code)
     }
 }
 #endif
+
+#if defined(TOHOST_SHUTDOWN)
+void __attribute__((noreturn)) tohost_exit(const struct __metal_shutdown *sd, int code)
+{
+  tohost = (code << 1) | 1;
+  while(1) {
+    __asm__ volatile ("nop");
+  }
+}
+
+const struct __metal_shutdown_vtable __tohost_shutdown_vtable = {
+  .exit = tohost_exit,
+};
+
+#endif /* TOHOST_SHUTDOWN */

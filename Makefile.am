@@ -70,6 +70,7 @@ endif # PRECONFIGURED
 nobase_include_HEADERS = \
 	metal/machine/@MACHINE_NAME@.h \
 	metal/drivers/fixed-clock.h \
+	metal/drivers/motion.h \
 	metal/drivers/riscv,clint0.h \
 	metal/drivers/riscv,cpu.h \
 	metal/drivers/riscv,plic0.h \
@@ -87,6 +88,7 @@ nobase_include_HEADERS = \
 	metal/drivers/sifive,spi0.h \
 	metal/drivers/sifive,test0.h \
 	metal/drivers/sifive,uart0.h \
+	metal/drivers/tohost.h \
 	metal/button.h \
 	metal/clock.h \
 	metal/compiler.h \
@@ -97,6 +99,7 @@ nobase_include_HEADERS = \
 	metal/itim.h \
 	metal/led.h \
 	metal/machine.h \
+	metal/motion.h \
 	metal/pmp.h \
 	metal/shutdown.h \
 	metal/spi.h \
@@ -136,6 +139,7 @@ libriscv__mmachine__@MACHINE_NAME@_a_CCASFLAGS = @MENV_METAL@ @MMACHINE_MACHINE_
 
 libriscv__mmachine__@MACHINE_NAME@_a_SOURCES = \
 	src/drivers/fixed-clock.c \
+	src/drivers/motion.c \
 	src/drivers/riscv,clint0.c \
 	src/drivers/riscv,cpu.c \
 	src/drivers/riscv,plic0.c \
@@ -153,6 +157,7 @@ libriscv__mmachine__@MACHINE_NAME@_a_SOURCES = \
 	src/drivers/sifive,spi0.c \
 	src/drivers/sifive,test0.c \
 	src/drivers/sifive,uart0.c \
+	src/drivers/tohost.c \
 	src/button.c \
 	src/clock.c \
 	src/cpu.c \
@@ -160,6 +165,7 @@ libriscv__mmachine__@MACHINE_NAME@_a_SOURCES = \
 	src/gpio.c \
 	src/interrupt.c \
 	src/led.c \
+	src/motion.c \
 	src/pmp.c \
 	src/shutdown.c \
 	src/spi.c \
