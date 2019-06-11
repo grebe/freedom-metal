@@ -24,10 +24,9 @@ struct metal_motion_vtable {
 };
 
 struct metal_motion {
+  const struct metal_motion_vtable *vtable;
   struct motion_actuator actuator;
   struct motion_sensor sensor;
-
-  const struct metal_motion_vtable *vtable;
 };
 
 struct metal_motion *metal_motion_get_device(int device_num);

@@ -9,7 +9,7 @@ struct metal_motion *metal_motion_get_device(int device_num)
     return NULL;
   }
 
-  return (struct metal_motion *) __metal_motion_table[device_num];
+  return (struct metal_motion *) (__metal_motion_table[device_num]);
 }
 
 void metal_motion_init(struct metal_motion *motion)

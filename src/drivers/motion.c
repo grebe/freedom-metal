@@ -2,25 +2,28 @@
 #include <metal/motion.h>
 #include <metal/drivers/motion.h>
 
+#include <stdint.h>
+
 /* Register byte offsets */
 #define MOTION_REG_ACTUATOR_COUNT 0x000
-#define MOTION_REG_ACCELERATION   0x004
-#define MOTION_REG_ACTUATE        0x008
-#define MOTION_REG_SENSOR_COUNT   0x00C
-#define MOTION_REG_FRONT_DISTANCE 0x010
-#define MOTION_REG_BACK_DISTANCE  0x014
-#define MOTION_REG_VELOCITY       0x018
-#define MOTION_REG_SENSE          0x01C
+#define MOTION_REG_ACCELERATION   0x008
+#define MOTION_REG_ACTUATE        0x010
+#define MOTION_REG_SENSOR_COUNT   0x018
+#define MOTION_REG_FRONT_DISTANCE 0x020
+#define MOTION_REG_BACK_DISTANCE  0x028
+#define MOTION_REG_VELOCITY       0x030
+#define MOTION_REG_SENSE          0x038
 
-#define MOTION_REG(offset) (((unsigned long)(((struct __metal_driver_motion *)(motion))->control_base) + offset))
-#define MOTION_REGW(offset) (__METAL_ACCESS_ONCE((__metal_io_u32 *)MOTION_REG(offset)))
+#define MOTION_REG(offset) (((uint64_t)(((struct __metal_driver_motion *)(motion))->control_base) + offset))
+#define MOTION_REGW(offset) (__METAL_ACCESS_ONCE((__metal_io_u64 *)MOTION_REG(offset)))
 
 void __metal_driver_motion_init(struct metal_motion *m)
 {
   struct __metal_driver_motion *motion = (void *)m;
   // wait for actuator and sensor queues to drain
-  while (MOTION_REGW(MOTION_REG_ACTUATOR_COUNT) > 0)
-    ;
+  while (MOTION_REGW(MOTION_REG_ACTUATOR_COUNT) > 0) {
+    asm("nop");
+  }
   while (MOTION_REGW(MOTION_REG_SENSOR_COUNT) > 0) {
     MOTION_REGW(MOTION_REG_SENSE) = 0;
   }
