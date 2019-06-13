@@ -38,7 +38,7 @@ static uintptr_t syscall(uintptr_t which, uint64_t arg0, uint64_t arg1, uint64_t
 
 int tohost_putc(struct metal_uart *uart, unsigned char c)
 {
-  static char buf[64] __attribute__((aligned(64)));
+  static unsigned char buf[64] __attribute__((aligned(64)));
   static int buflen = 0;
 
   buf[buflen++] = c;

@@ -156,6 +156,8 @@ void __metal_controller_interrupt_vector (metal_vector_mode mode, void *vec_tabl
     val &= ~(METAL_MTVEC_CLIC_VECTORED | METAL_MTVEC_CLIC_RESERVED);
     trap_entry = (uintptr_t)vec_table;
 
+    mode = METAL_DIRECT_MODE;
+
     switch (mode) {
     case METAL_SELECTIVE_VECTOR_MODE:
         asm volatile ("csrw mtvt, %0" :: "r"(trap_entry | METAL_MTVEC_CLIC));
